@@ -14,7 +14,7 @@ class MemberModel extends Model{
     protected $_validate = array(
 //        array(验证字段1,验证规则,错误提示,[验证条件,附加规则,验证时间]),
 //        array('agree','1','条款必须同意',1,'equal',1),//同意条款
-        array('email','email','email格式不正确',1,'',1), //验证邮箱
+        array('email','email','email格式不正确',1,'unique',1), //验证邮箱
         array('pwd','require','登录密码不能为空',1,'',1),
         array('pwd','checkPwd','密码格式不正确',1,'function',1), //函数认证密码(同样要求)
         array('repwd','pwd','确认密码不正确',1,'confirm',1), //二次密码是否一样

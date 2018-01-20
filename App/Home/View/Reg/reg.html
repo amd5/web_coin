@@ -95,7 +95,7 @@ color: #2471cb;
 
 <div class="ybc_section" id="reg-now" style="display:none;">
     <ul class="ybc_user_nav clearfix Font18">
-        <li class="current"><span>1</span>邮箱注册</li>
+        <li class="current"><span>1</span>手机注册</li>
         <li id="currentpwd"><span>2</span>设置交易密码</li>
         <li><span>3</span>实名认证</li>
         <li><span>4</span>注册成功</li>
@@ -106,10 +106,17 @@ color: #2471cb;
                 <div class="ybc_label left"><label for="pid">邀请码</label></div>
                 <div class="ybc_text left"><input type='text' name='pid' value="0"></div>
             </div>-->
-            <div class="ybc_user clearfix">
+<!--              <div class="ybc_user clearfix">
                 <div class="ybc_label left"><label for="email">电子邮箱</label></div>
                 <div class="ybc_text left"><input name="email" id="email" type="text"></div>
-                <div class="ybc_hint left"><strong class="msg_i" id="email_msg">i</strong><span id="emailmsg">请输入您的电子邮箱，用于登录和找回密码</span></div><!--默认 i class="msg_i"  正确class="msg_error"  错误class="msg_ok"-->
+                <div class="ybc_hint left"><strong class="msg_i" id="email_msg">i</strong><span id="emailmsg">请输入您的电子邮箱，用于登录和找回密码</span></div>
+                默认 i class="msg_i"  正确class="msg_error"  错误class="msg_ok"
+            </div> -->
+            <div class="ybc_user clearfix">
+                <div class="ybc_label left"><label for="phone">手机号码</label></div>
+                <div class="ybc_text left"><input name="phone" id="phone" type="text"></div>
+                <div class="ybc_hint left"><strong class="msg_i" id="email_msg">i</strong><span id="emailmsg">请输入您的手机号码，用于登录和找回密码</span></div>
+                <!--默认 i class="msg_i"  正确class="msg_error"  错误class="msg_ok"-->
             </div>
             <div class="ybc_user clearfix">
                 <div class="ybc_label left"><label for="pwd">登录密码</label></div>
@@ -158,11 +165,26 @@ color: #2471cb;
 </div>
 <script src="__PUBLIC__/Home/js/form.js"></script>
 <script type="text/javascript">
-    vali = {email: 0, pwd: 0, repwd: 0,tongyi:1};
+    vali = {phone: 0, pwd: 0, repwd: 0,tongyi:1};
     valistep2 = {pwdtrade: 0, repwdtrade: 0}
-    $('#email').bind('blur', function(){
-        var path_Email = "{:U('Reg/ajaxCheckEmail')}";
-        $.get(path_Email,{email:encodeURIComponent($(this).val())}, function(d){
+    // $('#email').bind('blur', function(){
+    //     var path_Email = "{:U('Reg/ajaxCheckEmail')}";
+    //     $.get(path_Email,{email:encodeURIComponent($(this).val())}, function(d){
+    //         if(d['status'] == 1){
+    //             $('#email_msg').html("√");
+    //             $('#email_msg').css('msg_ok');
+    //         }else{
+    //             $('#email_msg').html("×");
+    //             $('#email_msg').css('msg_error');
+    //         }
+    //         validateMsg('email', d['msg'], d['status']);
+    //         vali.email = d['status'];
+    //     }, 'json');
+    // });
+    // =========================================================================
+    $('#phone').bind('blur', function(){
+        var path_Phone = "{:U('Reg/ajaxCheckPhone')}";
+        $.get(path_Phone,{phone:encodeURIComponent($(this).val())}, function(d){
             if(d['status'] == 1){
                 $('#email_msg').html("√");
                 $('#email_msg').css('msg_ok');
@@ -170,10 +192,11 @@ color: #2471cb;
                 $('#email_msg').html("×");
                 $('#email_msg').css('msg_error');
             }
-            validateMsg('email', d['msg'], d['status']);
-            vali.email = d['status'];
+            validateMsg('phone', d['msg'], d['status']);
+            vali.phone = d['status'];
         }, 'json');
     });
+    // =========================================================================
 
     $('#pwd').bind('blur', function(){
         var pLen = $(this).val().length;

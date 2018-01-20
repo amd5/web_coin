@@ -46,7 +46,7 @@ function checkMobile($mobile) {
     if (!is_numeric($mobile)) {
         return false;
     }
-    return preg_match('#^13[\d]{9}$|^14[5,7]{1}\d{8}$|^15[^4]{1}\d{8}$|^17[0,6,7,8]{1}\d{8}$|^18[\d]{9}$#', $mobile) ? true : false;
+    return preg_match('/^[1][3,4,5,7,8,9][0-9]{9}$/', $mobile) ? true : false;
 }
 
 /**
@@ -616,7 +616,7 @@ function exportexcel($data = array(), $title = array(), $filename = 'report') {
  * @return unknown 
  */
 function inject_check($sql_str) {
-	$check= eregi('select|insert|update|delete|\'|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile', $sql_str);
+	$check= preg_match('select|insert|update|delete|\'|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile', $sql_str);
 	if($check){
 		return true;
 	}else{

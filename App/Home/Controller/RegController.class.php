@@ -42,17 +42,17 @@ class RegController extends CommonController {
             	return;
             }
             if (!$M_member->create()){
+                // dump ($M_member->create());
                 // 如果创建失败 表示验证没有通过 输出错误提示信息
                 $data['status'] = 0;
                 $data['info'] = $M_member->getError();
                 $this->ajaxReturn($data);
-//                $this->error($M_member->getError());
                 return;
             }else{
                 $r = $M_member->add();
                 if($r){
                     session('USER_KEY_ID',$r);//传入session避免直接进入个人信息界面
-                    session('USER_KEY',$_POST['email']);//用户名
+                    session('USER_KEY',$_POST['phone']);//用户名
                     session('STAUTS',0);
                     session('procedure',1);//SESSION 跟踪第一步
                     $data['status'] = 1;
@@ -109,6 +109,27 @@ class RegController extends CommonController {
             if($r){
                 $data['status'] = 0;
                 $data['msg'] = "邮箱已存在";
+            }else{
+                $data['status'] = 1;
+                $data['msg'] = "";
+            }
+        }
+        $this->ajaxReturn($data);
+    }
+
+    public function ajaxCheckPhone($phone){
+        $phone = urldecode($phone);
+        $data = array();
+        if(!checkMobile($phone)){
+            $data['status'] = 0;
+            $data['msg'] = "手机号码格式错误";
+        }else{
+            $M_member = M('Member');
+            $where['email']  = $phone;
+            $r = $M_member->where($where)->find();
+            if($r){
+                $data['status'] = 0;
+                $data['msg'] = "手机号码已存在";
             }else{
                 $data['status'] = 1;
                 $data['msg'] = "";

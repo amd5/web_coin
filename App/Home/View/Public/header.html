@@ -55,7 +55,7 @@
                         {$username} </a>
                         
                     <div style="display: none;" class="mywallet_list"><div class="clear"><ul class="balance_list"><h4>可用余额</h4><li><a href="javascript:void(0)"><em style="margin-top: 5px;" class="deal_list_pic_cny"></em><strong>人民币：</strong><span>{$member.rmb}</span></a></li></ul><ul class="freeze_list"><h4>委托冻结</h4><li><a href="javascript:void(0)"><em style="margin-top: 5px;" class="deal_list_pic_cny"></em><strong>人民币：</strong><span>{$member.forzen_rmb}</span></a></li></ul></div><div class="mywallet_btn_box"><a href="{:U('User/pay')}">充值</a><a href="{:U('User/draw')}">提现</a><a href="{:U('User/index')}">转入</a><a href="{:U('User/index')}">转出</a><a href="{:U('Entrust/manage')}">委托管理</a><a href="{:U('Trade/myDeal')}">成交查询</a></div></div>
-                    <span class="left" style="height:30px; line-height:30px; color:#999; margin-right:5px;">(UID: {$Think.session.USER_KEY_ID} )</span>
+                    <span class="left" style="height:30px; line-height:30px; color:#999; margin-right:5px;">{$member.phone}</span>
                     <a class="left" href="{:U('Login/loginOut')}" style="height:30px; line-height:30px; margin:0 5px;">退出</a>
                     <div id="my" class="account left" href="javascript:void(0)" style="z-index:9997; margin-right:5px;">
                         <a class="user_me" href="{:U('User/index')}">我的账户</a>
