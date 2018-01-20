@@ -14,9 +14,9 @@ class LoginController extends CommonController {
     public function checkLogin(){
     	$username=trim(I('post.username'));
     	$pwd=trim(I('post.pwd'));
-     	if(empty($username)||empty($pwd)){
-     		$this->error('请填写完整信息');
-     	}
+     	// if(empty($username)||empty($pwd)){
+     	// 	$this->error('请填写完整信息');
+     	// }
      	$admin=M('Admin')->where("username='$username'")->find();
      	if($admin['password']!=md5($pwd)){
      		$this->error('登录密码不正确');

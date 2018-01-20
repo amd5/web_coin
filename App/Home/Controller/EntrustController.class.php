@@ -15,7 +15,7 @@ class EntrustController extends TradeFatherController {
 	}
     //委托管理
 	public function manage(){
-	    $this->User_status();//判断是否需要进行信息补全
+	    // $this->User_status();//判断是否需要进行信息补全
 		//获取主币种
 		$currency=$this->getCurrencyByCurrencyId();
 		$this->assign('culist',$currency);
@@ -49,7 +49,7 @@ class EntrustController extends TradeFatherController {
      
     //委托历史
     public function history(){
-        $this->User_status();//判断是否需要进行信息补全
+        // $this->User_status();//判断是否需要进行信息补全
     	//获取主币种
 		$currency=$this->getCurrencyByCurrencyId();
 		$this->assign('culist',$currency);

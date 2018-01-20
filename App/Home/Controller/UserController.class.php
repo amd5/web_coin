@@ -100,11 +100,11 @@ class UserController extends HomeController {
             $newPwd = I('post.pwd','','md5');
             $rePwd = I('post.repwd','','md5');
             $M_member = D('Member');
-            if(!$M_member->checkPwd($_POST['oldpwd']) || !$M_member->checkPwd($_POST['pwd']) || !$M_member->checkPwd($_POST['repwd']) ){
-                $data['status']=2;
-                $data['info']='请输入6-20位密码';
-                $this->ajaxReturn($data);
-            }
+            // if(!$M_member->checkPwd($_POST['oldpwd']) || !$M_member->checkPwd($_POST['pwd']) || !$M_member->checkPwd($_POST['repwd']) ){
+            //     $data['status']=2;
+            //     $data['info']='请输入6-20位密码';
+            //     $this->ajaxReturn($data);
+            // }
             if($rePwd!=$newPwd){
                 $data['status']=2;
                 $data['info']='两次输入的密码不一致';
@@ -133,7 +133,7 @@ class UserController extends HomeController {
             session_destroy();
             $this->ajaxReturn($data);
         }else{
-            $this->User_status();
+            // $this->User_status();
             $this->display('update_password');
         }
     }
@@ -167,81 +167,34 @@ class UserController extends HomeController {
             $repwdtrade = I('post.repwdtrade');
             $data['add_time'] = time();
             $data['u_id'] = $member_id;
-            $data['idcard'] = $info['idcard'];
-            $data['idcardPositive'] = null;//判断后赋值
-            $data['idcardSide'] = null;//判断后赋值
-            $data['idcardHold'] = null;//判断后赋值
-            $Examine= M('Examine_pwdtrade')->where(array('u_id'=>$member_id,'status = 0'))->select();
-            if($Examine){
-                $this->error("您已提交过,正在审核中..");
-                return;
-            }
-            if(!checkPwd($data['pwd'])){
-                $this->error("密码输入位数不正确");
-                return;
-            }
-            if(!checkPwd($oldpwdtrade)){
-                $this->error("交易密码输入位数不正确");
-                return;
-            }
-            if(!checkPwd($data['pwdtrade'])){
-                $this->error("新密码输入位数不正确");
-                return;
-            }
-            if($data['pwdtrade'] != $repwdtrade){
-                $this->error("两次支付密码输入不一致");
-                return;
-            }
-            if($info['pwd']!=md5($data['pwd'])){
-                $this->error("密码输入错误");
-                return;
-            }
-            if($info['pwdtrade']!=md5($oldpwdtrade)){
-                $this->error("原始支付密码输入错误");
-                return;
-            }
-            if($info['pwd']==md5($data['pwdtrade'])){
-                $this->error("支付密码不能与登录密码一致");
-                return;
-            }
-            $upload = new Upload();// 实例化上传类
-            $upload->maxSize   =     3145728  ;// 设置附件上传大小
-            $upload->exts      =     array('jpg', 'gif', 'png');// 设置附件上传类型
-            $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
-            $upload->savePath  =     'User/Authentication/'; // 设置附件上传（子）目录
-            $upload->saveName  =     array('getRandom','15');
-
-            // 上传文件
-            $info   =   $upload->upload();
-            if(!$info) {// 上传错误提示错误信息
-                $this->error($upload->getError());
-                return;
-            }
-            if(empty($info['pic_1'])){
-                $this->error('图片1'.$upload->getError());
-                return;
-            }
-            if(empty($info['pic_2'])){
-                $this->error('图片2'.$upload->getError());
-                return;
-            }
-            if(empty($info['pic_3'])){
-                $this->error('图片3'.$upload->getError());
-                return;
-            }
-            $idcardPositive = ltrim($upload->rootPath.$info['pic_1']["savepath"].$info['pic_1']["savename"],'.');
-            $idcardSide = ltrim($upload->rootPath.$info['pic_2']["savepath"].$info['pic_2']["savename"],'.');
-            $idcardHold = ltrim($upload->rootPath.$info['pic_3']["savepath"].$info['pic_3']["savename"],'.');
-            $data['pwdtrade'] = I('post.pwdtrade','','md5');
-            $data['idcardPositive'] = $idcardPositive;//判断后赋值
-            $data['idcardSide'] = $idcardSide;//判断后赋值
-            $data['idcardHold'] = $idcardHold;
-
-            $r = M('Examine_pwdtrade')->add($data);
+            // $data['idcard'] = $info['idcard'];
+            // $data['idcardPositive'] = null;//判断后赋值
+            // $data['idcardSide'] = null;//判断后赋值
+            // $data['idcardHold'] = null;//判断后赋值
+            // $Examine= M('Examine_pwdtrade')->where(array('u_id'=>$member_id,'status = 0'))->select();
+            // if($Examine){
+            //     $this->error("您已提交过,正在审核中..");
+            //     return;
+            // }
+            // if(!checkPwd($data['pwd'])){
+            //     $this->error("密码输入位数不正确");
+            //     return;
+            // }
+            // if(!checkPwd($oldpwdtrade)){
+            //     $this->error("交易密码输入位数不正确");
+            //     return;
+            // }
+            // if(!checkPwd($data['pwdtrade'])){
+            //     $this->error("新密码输入位数不正确");
+            //     return;
+            // }
+            // $r = M('Examine_pwdtrade')->add($data);
+            $member_data['pwdtrade'] = I('post.pwdtrade');
+            $r = M('Member')->where(array('member_id'=>$member_id))->save($member_data);
             if($r ===false){
                 $this->error('服务器繁忙,请稍后重试');
             }
-            $this->success('申请成功,审核后会以系统通知通知您',U('User/index'));
+            $this->success('修改成功！',U('User/index'));
         }
     }
     /**
