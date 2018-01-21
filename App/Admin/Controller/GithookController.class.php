@@ -6,7 +6,7 @@ use Common\Controller\CommonController;
 class GithookController extends CommonController {
 	public function index()
 	{
-		echo "sssss";
+		echo "请勿非法访问！";
 	}
 
 	public function a1()
