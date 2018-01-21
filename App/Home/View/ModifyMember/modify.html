@@ -10,11 +10,11 @@
     <div class="ybc_warn Font18">为了确保您的资金安全，请实名认证</div>
     <form id="form" method="post"  jump-url="{:U('Reg/regSuccess')}"  action="{:U('ModifyMember/modify')}">
         <div class="ybc_userarea ybc_userarea2" style="margin-bottom:50px;">
-            <div class="ybc_user clearfix">
+<!--             <div class="ybc_user clearfix">
                 <div class="ybc_label left"><label for="nick">昵称</label></div>
                 <div class="ybc_text left"><input name="nick" id="nick" value="" type="text"></div>
                 <div class="ybc_hint left"><strong class="msg_i">i</strong><span id="nickmsg"><font style="color:red">请输入您的昵称</font></span></div>
-            </div>
+            </div> -->
             <div class="ybc_user clearfix">
                 <div class="ybc_label left"><label for="name">真实姓名</label></div>
                 <div class="ybc_text left"><input name="name" id="name" value="" onkeyup="value=value.replace(/[^\D]/g,'');" autocomplete="off" maxlength="8" type="text"></div>
@@ -25,9 +25,9 @@
                 <div class="ybc_text left">
                     <select id="cardtype" name="cardtype">
                         <option value="1" selected="selected">身份证</option>
-                        <option value="2">护照</option>
-                        <option value="3">军官证</option>
-                        <option value="4">其它</option>
+                        <!-- <option value="2">护照</option> -->
+                        <!-- <option value="3">军官证</option> -->
+                        <!-- <option value="4">其它</option> -->
                     </select>
                 </div>
             </div>
@@ -46,11 +46,11 @@
                     <span id="momsg">请输入您的手机号码</span>
                 </div>
             </div>
-            <div class="ybc_user clearfix">
+<!--             <div class="ybc_user clearfix">
                 <div class="ybc_label left"><label for="code">验证码</label></div>
                 <div class="ybc_text left"><input name="code" id="code" value="" type="text"></div>
                 <div class="ybc_hint left"><input type="button" class="button" value="点击发送" id="msgt" data-key='on' onclick="sandPhone()"></div>
-            </div>
+            </div> -->
             <!--<input id="avatar" name="avatar" value="/images/ulogodefault.jpg" type="hidden">-->
             <div class="ybc_user clearfix">
                 <div class="ybc_label left"><label>&nbsp;</label></div>
@@ -75,24 +75,24 @@
 <script charset="utf-8" src="__PUBLIC__/Home/js/zh_CN.js"></script>
 <script src="__PUBLIC__/Home/js/form.js"></script>
 <script>
-    vali = {name: 0, nick: 0, idcard: 0,phone:0};
+    vali = {name: 0, idcard: 0,phone:0};
     $('#name').bind('blur', function(){
         if($(this).val().length < 2) return validateMsg('name', '请输入您的真实姓名', 0);
         return validateMsg('name', '', vali.name = 1);
     });
-    $('#nick').bind('blur', function(){
-        if($(this).val().length < 2) {
-            vali.nick = 0;
-            return validateMsg('nick', '请输入您的昵称', 0);
-        }
-        $.get("{:U('ModifyMember/ajaxCheckNick')}",{nick:encodeURIComponent($(this).val())}, function(d){
-            validateMsg('nick', d['msg'], d['status']);
-            if(d.status==1){
-                vali.nick = d['status'];
-            }
-        }, 'json');
+    // $('#nick').bind('blur', function(){
+    //     if($(this).val().length < 2) {
+    //         vali.nick = 0;
+    //         return validateMsg('nick', '请输入您的昵称', 0);
+    //     }
+    //     $.get("{:U('ModifyMember/ajaxCheckNick')}",{nick:encodeURIComponent($(this).val())}, function(d){
+    //         validateMsg('nick', d['msg'], d['status']);
+    //         if(d.status==1){
+    //             vali.nick = d['status'];
+    //         }
+    //     }, 'json');
 
-    });
+    // });
 
     $('#mo').bind('blur', function(){
         if($(this).val().length != 11) {
@@ -112,43 +112,43 @@
         }
         return validateMsg('idcard', '', vali.idcard = 1);
     });
-    function sandPhone(){
-        var i=120;
-        var tid2;
-        tid2=setInterval(function(){
-            if($("#msgt").attr("data-key")=='off'){
-                $("#msgt").attr("disabled",true);
-               // $("#msgt").removeClass("class");
-               // $("#msgt").addClass("button again");
-                i--;
-                $("#msgt").val(i+"秒后可重新发送");
-                if(i<=0){
-				//	$("#msgt").removeClass("class");
-				//	$("#msgt").addClass("button");
-                    $("#msgt").removeAttr("disabled").val("重新发送验证码");
-					$("#msgt").attr("data-key","on");
-                }
-            }
-        },1000);
-		var phone = $("mo").val();
-        if(phone && /^1[3|4|5|8]\d{9}$/.test(phone)){
-            layer.msg("请填写正确的手机号码");
-        }else{
-            $.post("{:U('ModifyMember/ajaxSandPhone')}",{phone:encodeURIComponent($("#mo").val())},
-                    function(d){
-                       layer.msg(d.info);				   
-                        if(d.status==1){	
-                            i=120;
-                            $("#msgt").attr("data-key","off");
-                        }
-                    });
-        }
-    }
+  //   function sandPhone(){
+  //       var i=120;
+  //       var tid2;
+  //       tid2=setInterval(function(){
+  //           if($("#msgt").attr("data-key")=='off'){
+  //               $("#msgt").attr("disabled",true);
+  //              // $("#msgt").removeClass("class");
+  //              // $("#msgt").addClass("button again");
+  //               i--;
+  //               $("#msgt").val(i+"秒后可重新发送");
+  //               if(i<=0){
+		// 		//	$("#msgt").removeClass("class");
+		// 		//	$("#msgt").addClass("button");
+  //                   $("#msgt").removeAttr("disabled").val("重新发送验证码");
+		// 			$("#msgt").attr("data-key","on");
+  //               }
+  //           }
+  //       },1000);
+		// var phone = $("mo").val();
+  //       if(phone && /^1[3|4|5|8]\d{9}$/.test(phone)){
+  //           layer.msg("请填写正确的手机号码");
+  //       }else{
+  //           $.post("{:U('ModifyMember/ajaxSandPhone')}",{phone:encodeURIComponent($("#mo").val())},
+  //                   function(d){
+  //                      layer.msg(d.info);				   
+  //                       if(d.status==1){	
+  //                           i=120;
+  //                           $("#msgt").attr("data-key","off");
+  //                       }
+  //                   });
+  //       }
+  //   }
     function valiForms(){
-        if(vali.nick==0){
-            $('#nick').focus();
-            return false;
-        }
+        // if(vali.nick==0){
+        //     $('#nick').focus();
+        //     return false;
+        // }
         if(vali.name==0){
             $('#name').focus();
             return false;
@@ -205,7 +205,7 @@
 <!--footer end-->
 <script type="text/javascript" src="__PUBLIC__/Home/js/downList.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Home/js/sdmenu.js"></script>
-<script>
+<!-- <script>
     var _hmt = _hmt || [];
     (function() {
         var hm = document.createElement("script");
@@ -213,7 +213,7 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
-</script>
+</script> -->
 
 
 </body></html>

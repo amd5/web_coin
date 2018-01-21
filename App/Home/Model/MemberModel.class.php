@@ -26,11 +26,11 @@ class MemberModel extends Model{
 
         //modify验证
 
-        array('nick','require','昵称不能为空',1,'',2),
+        // array('nick','require','昵称不能为空',1,'',2),
         array('name','require','真实姓名不能为空',1,'',2),
         array('idcard','require','身份证号码必须填写',1,'',2),
         array('phone','require','手机号码必须填写',1,'',2),
-        array('code','require','验证码必须填写',1,'',2),
+        // array('code','require','验证码必须填写',1,'',2),
         array('code','checkPhoneCode','手机验证码不正确',1,'function',2),
     );
 
